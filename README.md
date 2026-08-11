@@ -79,6 +79,27 @@ The **Fundsroom Operations Portal** streamlines real-world business workflows ac
 - **`WAREHOUSE`**: Access to Inventory Catalog (`GET/POST/PUT /products`), Stock Movements (`POST /products/:id/stock`), and Challans.
 - **`ACCOUNTS`**: Access to Customer CRM, Tax Invoices, and Read-only Challans.
 
+### API Endpoints & Response Payloads Matrix:
+
+| Module | HTTP Method & Route | Access Level | Description & Response Payload Summary |
+| :--- | :--- | :--- | :--- |
+| **Health** | `GET /health` | Public | Returns `{ "success": true, "message": "Server is healthy and DB is connected" }`. |
+| **Auth** | `POST /auth/login` | Public | Body: `{ email, password }`. Returns JWT token & user profile object. |
+| | `GET /auth/me` | Authenticated | Returns current authenticated user details and role permissions. |
+| **CRM** | `GET /customers` | Admin, Sales, Accounts | Returns paginated list of customers matching search & filter query params. |
+| | `POST /customers` | Admin, Sales | Body: `{ name, mobile, email, businessName, customerType, status }`. |
+| | `GET /customers/:id` | Admin, Sales, Accounts | Returns single customer record with timeline of all follow-up call notes. |
+| | `POST /customers/:id/notes` | Admin, Sales, Accounts | Body: `{ note }`. Adds a new follow-up call note to customer history. |
+| **Products** | `GET /products` | All Roles | Returns product catalog list with computed `isLowStock` alert indicator. |
+| | `POST /products` | Admin, Warehouse | Body: `{ name, sku, category, unitPrice, initialStock, minStockAlert }`. |
+| | `POST /products/:id/stock` | Admin, Warehouse | Body: `{ quantityChanged, movementType: 'IN'/'OUT', reason }`. Atomic stock adjustment. |
+| | `GET /products/:id/history` | All Roles | Returns historical audit log list of all Stock IN/OUT movements for item. |
+| **Challans** | `GET /challans` | All Roles | Returns list of delivery challans. |
+| | `POST /challans` | Admin, Sales | Body: `{ customerId, status: 'DRAFT', items: [...] }`. Creates challan with price snapshot. |
+| | `GET /challans/:id` | All Roles | Returns single challan + price snapshots (used to render A4 Tax Invoice PDF). |
+| | `POST /challans/:id/confirm` | Admin, Sales, Warehouse | Atomically decrements stock from DB. Returns HTTP 400 error if stock is insufficient. |
+| | `POST /challans/:id/cancel` | Admin, Sales, Warehouse | Cancels order and automatically reverses previously deducted stock back to inventory. |
+| **Dashboard** | `GET /dashboard/stats` | All Roles | Returns system count metrics (`totalCustomers`, `totalProducts`, `lowStockCount`, etc.). |
 
 ---
 
