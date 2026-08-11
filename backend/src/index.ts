@@ -13,14 +13,22 @@ dotenv.config();
 
 const app = express();
 
-// Production-Safe CORS Configuration
+// Production-Safe & Permissive CORS Configuration for Deployed Vercel & Render
 const allowedOrigins = process.env.FRONTEND_URL || process.env.CORS_ORIGIN;
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, Postman) or matching frontend URL
-      if (!origin || !allowedOrigins || allowedOrigins === '*' || allowedOrigins.split(',').includes(origin)) {
+      // Allow requests with no origin (mobile apps, Postman)
+      if (!origin) return callback(null, true);
+      // Allow all Vercel domains (*.vercel.app), localhost, or specified origin
+      if (
+        !allowedOrigins ||
+        allowedOrigins === '*' ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('localhost') ||
+        allowedOrigins.split(',').includes(origin)
+      ) {
         callback(null, true);
       } else {
         callback(new Error(`CORS Policy: Request from origin '${origin}' blocked.`));
