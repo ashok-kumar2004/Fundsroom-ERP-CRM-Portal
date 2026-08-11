@@ -20,6 +20,7 @@ router.post('/', authorize('ADMIN', 'SALES'), createCustomer);
 // Detail, Update, and Add FollowUp
 router.get('/:id', authorize('ADMIN', 'SALES', 'ACCOUNTS'), getCustomerById);
 router.put('/:id', authorize('ADMIN', 'SALES'), updateCustomer);
+router.post('/:id/notes', authorize('ADMIN', 'SALES', 'ACCOUNTS'), addFollowUp);
 router.post('/:id/follow-ups', authorize('ADMIN', 'SALES', 'ACCOUNTS'), addFollowUp);
 
 export default router;
