@@ -108,7 +108,7 @@ export const getCustomers = async (req: AuthRequest, res: Response, next: NextFu
 
 export const getCustomerById = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
 
     const customer = await prisma.customer.findUnique({
       where: { id },
@@ -145,7 +145,7 @@ export const getCustomerById = async (req: AuthRequest, res: Response, next: Nex
 
 export const updateCustomer = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const data = customerSchema.parse(req.body);
 
     const existing = await prisma.customer.findUnique({ where: { id } });
@@ -182,7 +182,7 @@ export const updateCustomer = async (req: AuthRequest, res: Response, next: Next
 
 export const addFollowUp = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id: customerId } = req.params;
+    const customerId = req.params.id as string;
     const { note } = followUpSchema.parse(req.body);
     const userId = req.user?.userId;
 

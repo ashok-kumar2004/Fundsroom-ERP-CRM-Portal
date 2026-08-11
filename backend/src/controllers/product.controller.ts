@@ -136,7 +136,7 @@ export const getProducts = async (req: AuthRequest, res: Response, next: NextFun
 
 export const getProductById = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
 
     const product = await prisma.product.findUnique({
       where: { id },
@@ -161,7 +161,7 @@ export const getProductById = async (req: AuthRequest, res: Response, next: Next
 
 export const updateProduct = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const parseResult = updateProductSchema.safeParse(req.body);
 
     if (!parseResult.success) {
@@ -221,7 +221,7 @@ export const updateProduct = async (req: AuthRequest, res: Response, next: NextF
 
 export const addStockMovement = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id: productId } = req.params;
+    const productId = req.params.id as string;
     const parseResult = stockMovementSchema.safeParse(req.body);
 
     if (!parseResult.success) {
@@ -308,7 +308,7 @@ export const addStockMovement = async (req: AuthRequest, res: Response, next: Ne
 
 export const getStockHistory = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id: productId } = req.params;
+    const productId = req.params.id as string;
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     const skip = (page - 1) * limit;

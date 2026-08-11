@@ -199,7 +199,7 @@ export const createChallan = async (req: AuthRequest, res: Response, next: NextF
 
 export const confirmChallan = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const userId = req.user?.userId;
 
     if (!userId) {
@@ -308,7 +308,7 @@ export const confirmChallan = async (req: AuthRequest, res: Response, next: Next
 
 export const cancelChallan = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const userId = req.user?.userId;
 
     if (!userId) {
@@ -454,7 +454,7 @@ export const getChallans = async (req: AuthRequest, res: Response, next: NextFun
 
 export const getChallanById = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
 
     const challan = await prisma.challan.findUnique({
       where: { id },
