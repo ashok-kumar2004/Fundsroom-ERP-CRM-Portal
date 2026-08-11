@@ -51,37 +51,80 @@ The **Fundsroom Operations Portal** streamlines real-world business workflows ac
 ## 📁 Folder Structure
 
 ```text
-fundsoom/
+Fundsroom-ERP-CRM-Portal/
 ├── DEPLOYMENT.md                  <- Free-tier hosting deployment manual
 ├── CHECKLIST.md                   <- PDF Case Study compliance matrix
 ├── postman_collection.json        <- Exported Postman API test collection
 ├── README.md                      <- Main documentation
+├── .gitignore                     <- Git ignore patterns for env and binaries
 ├── backend/
 │   ├── .env.example               <- Backend environment variable template
+│   ├── .gitignore                 <- Backend git ignore rules
 │   ├── package.json               <- Build, start scripts
 │   ├── prisma.config.ts           <- Prisma 7 configuration
+│   ├── tsconfig.json              <- TypeScript compiler configuration
 │   ├── prisma/
 │   │   ├── schema.prisma          <- Active database schema
 │   │   ├── schema.postgresql.prisma <- Supabase PostgreSQL schema
 │   │   ├── schema.sqlite.prisma   <- Local SQLite schema
 │   │   └── seed.ts                <- 4-role user & inventory seed script
 │   └── src/
-│       ├── config/db.ts           <- Dynamic database adapter
-│       ├── controllers/           <- Auth, Customer, Product, Challan, Dashboard
-│       ├── middleware/            <- JWT Auth, Error Handler, Zod Validation
-│       ├── routes/                <- Express REST API routes & Health Check
+│       ├── config/
+│       │   └── db.ts              <- Dynamic database adapter (Pg & SQLite)
+│       ├── controllers/
+│       │   ├── auth.controller.ts     <- Auth login & profile controller
+│       │   ├── customer.controller.ts <- Customer CRM & notes controller
+│       │   ├── product.controller.ts  <- Inventory & stock movement controller
+│       │   ├── challan.controller.ts  <- Sales delivery challan controller
+│       │   └── dashboard.controller.ts<- Analytics dashboard controller
+│       ├── middleware/
+│       │   ├── auth.ts            <- JWT Auth & role authorization middleware
+│       │   ├── errorHandler.ts    <- Global Express error handler
+│       │   └── validate.ts        <- Zod request body validation middleware
+│       ├── routes/
+│       │   ├── auth.routes.ts     <- Auth REST API routes
+│       │   ├── customer.routes.ts <- Customer CRM REST API routes
+│       │   ├── product.routes.ts  <- Product & Stock REST API routes
+│       │   ├── challan.routes.ts  <- Sales Challan REST API routes
+│       │   ├── dashboard.routes.ts<- Dashboard statistics routes
+│       │   └── health.routes.ts   <- Health check GET /health endpoint
 │       └── index.ts               <- Express App Entry with production CORS
 └── frontend/
     ├── .env.example               <- Local Vite env template
     ├── .env.production.example    <- Vercel deployment env template
     ├── package.json               <- Frontend dependencies & scripts
     ├── vercel.json                <- SPA routing rewrite rules
+    ├── index.html                 <- HTML entry point
     └── src/
-        ├── api/                   <- Axios REST API client methods
-        ├── components/            <- Layout, SearchBar, HighlightText, Lucide Icons
-        ├── context/               <- AuthContext state provider
-        ├── pages/                 <- CRM, Inventory, Challans, Detail & Login Pages
-        ├── types/                 <- TypeScript interfaces
+        ├── api/
+        │   ├── axios.config.ts    <- Axios base URL configuration
+        │   ├── auth.api.ts        <- Auth REST API client methods
+        │   ├── customer.api.ts    <- Customer CRM REST API client methods
+        │   ├── product.api.ts     <- Inventory REST API client methods
+        │   └── challan.api.ts     <- Challan REST API client methods
+        ├── components/
+        │   ├── Layout.tsx         <- Main sidebar navigation layout
+        │   ├── ProtectedRoute.tsx <- Auth & Role guard wrapper
+        │   ├── SearchBar.tsx      <- Search bar with quick filter pills
+        │   ├── HighlightText.tsx  <- Yellow search term highlight renderer
+        │   └── Icons.tsx          <- Lucide SVG Icon Component Library
+        ├── context/
+        │   └── AuthContext.tsx    <- Global Auth & User State provider
+        ├── pages/
+        │   ├── LoginPage.tsx          <- Login form & quick demo preset buttons
+        │   ├── DashboardPage.tsx      <- Analytics dashboard page
+        │   ├── CustomersPage.tsx      <- Customer CRM directory page
+        │   ├── CustomerDetailPage.tsx  <- Customer profile & notes timeline
+        │   ├── ProductsPage.tsx       <- Inventory catalog & stock alerts
+        │   ├── ProductDetailPage.tsx   <- Stock metrics & IN/OUT audit trail
+        │   ├── ChallansPage.tsx       <- Delivery challans list page
+        │   ├── CreateChallanPage.tsx   <- Multi-item challan creation form
+        │   └── ChallanDetailPage.tsx  <- A4 Tax Invoice PDF print document
+        ├── types/
+        │   ├── auth.types.ts      <- Auth TypeScript interfaces
+        │   ├── customer.types.ts  <- Customer CRM interfaces
+        │   ├── product.types.ts   <- Product & Stock Movement interfaces
+        │   └── challan.types.ts   <- Challan & Line Item interfaces
         ├── App.tsx                <- Router & Role-Protected Routes
         ├── index.css              <- Executive Light Design Tokens
         └── main.tsx               <- React Entry Point
