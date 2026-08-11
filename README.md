@@ -2,7 +2,7 @@
 
 A full-stack enterprise Operations Portal built for wholesale/distribution companies to manage Customers (CRM), Products & Inventory, Sales Delivery Challans, and Printable Tax Invoices.
 
-![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![System License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Node Version](https://img.shields.io/badge/Node.js-v20+-green.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-v5.7+-blue.svg)
 ![React](https://img.shields.io/badge/React-v18+-indigo.svg)
@@ -10,76 +10,97 @@ A full-stack enterprise Operations Portal built for wholesale/distribution compa
 
 ---
 
-## 📜 Official Case Study Submission Links & Details
+## 📌 Project Overview & Architecture Summary
 
-| Requirement | Value / Live Link |
-| :--- | :--- |
-| **GitHub Repository** | [https://github.com/ashok-kumar2004/Fundsroom-ERP-CRM-Portal](https://github.com/ashok-kumar2004/Fundsroom-ERP-CRM-Portal) |
-| **Live Frontend App** | [https://fundsroom-erp.vercel.app](https://fundsroom-erp.vercel.app) *(Vercel)* |
-| **Live Backend API** | [https://fundsroom-erp-crm-portal-p9ja.onrender.com](https://fundsroom-erp-crm-portal-p9ja.onrender.com) *(Render)* |
-| **Health Check API** | [https://fundsroom-erp-crm-portal-p9ja.onrender.com/health](https://fundsroom-erp-crm-portal-p9ja.onrender.com/health) |
-| **Postman Collection** | [`postman_collection.json`](file:///c:/Users/ashok/OneDrive/Desktop/ashok/fundsoom/postman_collection.json) in repository root |
+The **Fundsroom Operations Portal** streamlines real-world business workflows across internal departments (Sales, Warehouse, Accounts, Admin):
+
+### Architectural Decisions
+- **Backend Architecture (Node.js + Express + TypeScript)**: Built using a modular controller-route-middleware layer. TypeScript ensures end-to-end type safety, while Zod handles request payload validation to guarantee valid data at the API boundary.
+- **Database & ORM Layer (Prisma ORM + PostgreSQL / SQLite)**: Uses Prisma ORM with dynamic provider resolution. Works seamlessly with SQLite (`dev.db`) for offline local development and PostgreSQL (Supabase / Neon) for cloud production.
+- **Frontend Architecture (React + Vite + TailwindCSS)**: Formed as a Single Page Application (SPA) with Executive Light aesthetic design tokens, Lucide SVG icon system, client-side routing, and real-time inline input validation.
+- **Print Engine (CSS @media print)**: 1-Click A4 PDF Corporate Tax Invoice & Delivery Note document generator built using pure CSS `@media print` directives without bloated heavy PDF dependencies.
+
+---
+
+## 🛠️ Tech Stack List
+
+### Backend
+- **Runtime**: Node.js (v20+)
+- **Language**: TypeScript (v5.7+)
+- **Framework**: Express.js (v5)
+- **Database ORM**: Prisma ORM (v7.9)
+- **Databases**: Supabase / Neon PostgreSQL (Production), SQLite (Local Offline Dev)
+- **Validation**: Zod (v4)
+- **Authentication**: JWT (`jsonwebtoken`) & Bcrypt (`bcryptjs`)
+
+### Frontend
+- **Framework**: React 18 (Vite 8)
+- **Language**: TypeScript
+- **Styling**: Vanilla TailwindCSS (Executive Light Palette)
+- **Icons**: Custom Lucide-Style SVG Icon Library
+- **HTTP Client**: Axios (with Bearer token interceptor)
+- **Routing**: React Router DOM (v6)
+
+### DevOps & Hosting
+- **Frontend Hosting**: Vercel
+- **Backend Web Service**: Render
+- **Database Hosting**: Supabase / Neon PostgreSQL
+
+---
+
+## 📁 Folder Structure
+
+```text
+fundsoom/
+├── DEPLOYMENT.md                  <- Free-tier hosting deployment manual
+├── CHECKLIST.md                   <- PDF Case Study compliance matrix
+├── postman_collection.json        <- Exported Postman API test collection
+├── README.md                      <- Main documentation
+├── backend/
+│   ├── .env.example               <- Backend environment variable template
+│   ├── package.json               <- Build, start scripts
+│   ├── prisma.config.ts           <- Prisma 7 configuration
+│   ├── prisma/
+│   │   ├── schema.prisma          <- Active database schema
+│   │   ├── schema.postgresql.prisma <- Supabase PostgreSQL schema
+│   │   ├── schema.sqlite.prisma   <- Local SQLite schema
+│   │   └── seed.ts                <- 4-role user & inventory seed script
+│   └── src/
+│       ├── config/db.ts           <- Dynamic database adapter
+│       ├── controllers/           <- Auth, Customer, Product, Challan, Dashboard
+│       ├── middleware/            <- JWT Auth, Error Handler, Zod Validation
+│       ├── routes/                <- Express REST API routes & Health Check
+│       └── index.ts               <- Express App Entry with production CORS
+└── frontend/
+    ├── .env.example               <- Local Vite env template
+    ├── .env.production.example    <- Vercel deployment env template
+    ├── package.json               <- Frontend dependencies & scripts
+    ├── vercel.json                <- SPA routing rewrite rules
+    └── src/
+        ├── api/                   <- Axios REST API client methods
+        ├── components/            <- Layout, SearchBar, HighlightText, Lucide Icons
+        ├── context/               <- AuthContext state provider
+        ├── pages/                 <- CRM, Inventory, Challans, Detail & Login Pages
+        ├── types/                 <- TypeScript interfaces
+        ├── App.tsx                <- Router & Role-Protected Routes
+        ├── index.css              <- Executive Light Design Tokens
+        └── main.tsx               <- React Entry Point
+```
 
 ---
 
 ## 🔑 Test Login Credentials (All 4 Roles)
 
-Password for all test accounts: **`Test@123`**
+Password for all test accounts is: **`Test@123`**
 
-| Role | Email Address | Password | Privileges |
+| Role | Email Address | Password | Workspace Access |
 | :--- | :--- | :--- | :--- |
-| 👑 **Admin** | `admin@test.com` | `Test@123` | Unrestricted Access across all system modules |
-| 💼 **Sales** | `sales@test.com` | `Test@123` | Customer CRM, Inventory view, Create Challans |
-| 📦 **Warehouse** | `warehouse@test.com` | `Test@123` | Inventory CRUD, Stock IN/OUT audit logging |
-| 🧾 **Accounts** | `accounts@test.com` | `Test@123` | Customer CRM, Read-only Challans, PDF Tax Invoices |
+| 👑 **Admin** | `admin@test.com` | `Test@123` | Full System Access (All Modules) |
+| 💼 **Sales** | `sales@test.com` | `Test@123` | Customers CRM, Inventory, Create Challans |
+| 📦 **Warehouse** | `warehouse@test.com` | `Test@123` | Inventory Catalog, Stock IN/OUT Adjustments, Challans |
+| 🧾 **Accounts** | `accounts@test.com` | `Test@123` | Customer CRM, Invoices, Read-only Challans |
 
-*(Note: The login screen includes 1-click preset demo buttons to instantly log in as any role.)*
-
----
-
-## 📌 Architecture & Tech Stack
-
-```text
-       [ React 18 SPA (Vite) + TailwindCSS + Lucide Icons ]
-                                │
-                                ▼  (HTTP / REST APIs with JWT Bearer Auth)
-                 [ Express 5 REST API (Node.js + TS) ]
-                                │
-             ┌──────────────────┴──────────────────┐
-             ▼                                     ▼
-  [ Zod Request Validation ]           [ Express Global Error Handler ]
-             │                                     │
-             └──────────────────┬──────────────────┘
-                                ▼
-                   [ Prisma ORM (v7.9) ]
-                                │
-            ┌───────────────────┴───────────────────┐
-            ▼                                       ▼
-  [ Supabase PostgreSQL ]                   [ Local SQLite ]
-   (Cloud Production DB)                    (Offline Dev DB)
-```
-
-### Stack List
-- **Backend**: Node.js, Express.js (v5), TypeScript, Prisma ORM (v7.9), Zod validation, JWT authentication (`jsonwebtoken`), Bcrypt password hashing (`bcryptjs`).
-- **Database**: Supabase / Neon PostgreSQL (Production), SQLite (Local Offline Development).
-- **Frontend**: React 18 (Vite 8), TypeScript, TailwindCSS (Executive Light Theme), Lucide SVG icons, Axios HTTP client, React Router DOM v6.
-- **Print Engine**: Pure CSS `@media print` directives (`window.print()`) for 1-click A4 Tax Invoice PDF generation.
-
----
-
-## 📋 Case Study Requirements Compliance Matrix
-
-| Module | Requirement | Status | Implementation Details |
-| :--- | :--- | :--- | :--- |
-| **Authentication & Roles** | Role-based login (`Admin`, `Sales`, `Warehouse`, `Accounts`) | ✅ **Implemented** | JWT Auth with role payload, Bcrypt password hashing, and role middleware (`auth.ts`). |
-| | Input validation & error handling | ✅ **Implemented** | Zod schema validation (`loginSchema`) with real-time field error indicators on UI. |
-| **Customer CRM** | Customer Profile Fields (Name, Mobile, Email, Business Name, GST, Address, Status, Follow-up date, Notes) | ✅ **Implemented** | Managed via Prisma `Customer` model and Zod validation schemas. |
-| | Features (Add, Edit, Search, Detail View, Follow-up Notes timeline) | ✅ **Implemented** | REST APIs (`/customers`), search keyword highlighting engine, and follow-up call notes timeline. |
-| **Products & Inventory** | Product Fields (Name, SKU, Category, Unit Price, Current Stock, Min Stock Alert, Location) | ✅ **Implemented** | Managed via Prisma `Product` model. |
-| | Features (Add, Edit, Low Stock Alerting, Stock Movement IN/OUT audit log) | ✅ **Implemented** | Atomic transactions for stock adjustments and `StockMovement` audit logs. |
-| **Sales Challans** | Delivery Notes Creation (Customer selection, multi-item line items, auto challan number `CH-2026-xxx`) | ✅ **Implemented** | `POST /challans` API with pricing snapshotting and automatic number generation. |
-| | Draft vs Confirmed Status & Automatic Stock Deduction | ✅ **Implemented** | `POST /challans/:id/confirm` atomically decrements inventory stock & prevents negative stock. |
-| | Cancellation & Stock Reversal | ✅ **Implemented** | `POST /challans/:id/cancel` automatically reverses stock back to inventory if order was confirmed. |
+*(Note: The login page includes 1-click preset buttons to instantly log in as any role.)*
 
 ---
 
@@ -102,14 +123,14 @@ Password for all test accounts: **`Test@123`**
    cd backend
    npm install
 
-   # Push Schema to Local SQLite & Run Seed Script
+   # Initialize Local Database & Run Seed Data
    npx prisma db push
    npx tsx prisma/seed.ts
 
-   # Start Development Server
+   # Start Backend Development Server
    npm run dev
    ```
-   *Backend will run on `http://localhost:5000`.*
+   *Backend will start on `http://localhost:5000`.*
 
 3. **Setup & Run Frontend**:
    Open a new terminal window:
@@ -118,51 +139,74 @@ Password for all test accounts: **`Test@123`**
    npm install
    npm run dev
    ```
-   *Frontend will run on `http://localhost:5173`.*
+   *Frontend will start on `http://localhost:5173`.*
+
+4. **Access the Portal**:
+   Open `http://localhost:5173` in your browser and click any demo account button to log in!
 
 ---
 
-## 🌐 Environment Variables Reference
+## 🌐 Environment Variables Explanation
 
-### Backend (`backend/.env.example`)
-```env
-DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:6543/postgres?pgbouncer=true"
-JWT_SECRET="supersecretjwtkey"
-PORT=5000
-FRONTEND_URL="https://fundsroom-erp.vercel.app"
-```
+### Backend Environment Variables (`backend/.env`)
 
-### Frontend (`frontend/.env.production.example`)
-```env
-VITE_API_URL="https://fundsroom-erp-crm-portal-p9ja.onrender.com"
-```
+| Variable | Description | Example / Value |
+| :--- | :--- | :--- |
+| `DATABASE_URL` | PostgreSQL or SQLite database connection string | `postgresql://user:pass@host:5432/db` or `file:./dev.db` |
+| `JWT_SECRET` | Secret key used for signing JWT tokens | `supersecretjwtkey` |
+| `PORT` | Port number for Express server | `5000` |
+| `FRONTEND_URL` | Allowed frontend origin for CORS policy | `https://fundsroom-erp.vercel.app` |
 
----
+### Frontend Environment Variables (`frontend/.env.production`)
 
-## 🚀 Deployment Manual (Supabase + Render + Vercel)
-
-### Step A: Database Setup (Supabase / Neon)
-1. Get the connection string from Supabase (Database settings -> Connection Pooler).
-2. Set `DATABASE_URL` in Render.
-
-### Step B: Backend Web Service (Render)
-- **Build Command**: `npm install && npx prisma generate && npm run build`
-- **Start Command**: `npx prisma db push && npm start`
-- **Health Check Path**: `/health`
-- **Environment Variables**: Set `DATABASE_URL`, `JWT_SECRET`, `FRONTEND_URL`, `PORT`.
-
-### Step C: Frontend Web App (Vercel)
-- **Framework Preset**: `Vite`
-- **Root Directory**: `frontend`
-- **Build Command**: `npm run build`
-- **Output Directory**: `dist`
-- **Environment Variable**: Set `VITE_API_URL` = `https://fundsroom-erp-crm-portal-p9ja.onrender.com`.
+| Variable | Description | Example / Value |
+| :--- | :--- | :--- |
+| `VITE_API_URL` | Base REST API URL of backend server | `https://fundsroom-backend.onrender.com` |
 
 ---
 
-## 📝 Known Limitations & Development Assumptions
+## 📬 API Documentation
 
-1. **Unit Price Snapshotting**: Product unit prices and names are snapshotted onto line items at the time of challan creation so historical invoices remain unaffected by future product price edits.
-2. **Atomic Stock Deduction**: Order confirmation atomically decrements inventory stock via database transactions. Order cancellation automatically reverses previously deducted stock back into inventory.
-3. **Print Engine**: Invoice PDF export is handled via pure A4 `@media print` directives (`window.print()`) which can be saved as PDF in 1 click.
-4. **Skipped Bonus Items**: Physical AWS S3 image uploads were skipped to avoid requiring paid AWS S3 bucket credentials (products use Lucide category badges instead).
+A complete, pre-configured Postman API Collection is included in the repository root at [**`postman_collection.json`**](./postman_collection.json).
+
+### What It Covers:
+- **Authentication**: `POST /auth/login` (with automatic JWT token extraction test script), `GET /auth/me`
+- **Customer CRM**: `GET /customers`, `POST /customers`, `GET /customers/:id`, `POST /customers/:id/notes`
+- **Products & Inventory**: `GET /products`, `POST /products`, `POST /products/:id/stock`, `GET /products/:id/history`
+- **Sales Challans**: `GET /challans`, `POST /challans`, `POST /challans/:id/confirm`, `POST /challans/:id/cancel`
+- **Dashboard & Health**: `GET /dashboard/stats`, `GET /health`
+
+### How to Use:
+1. Open Postman → Click **Import** → Select [`postman_collection.json`](./postman_collection.json).
+2. Set the `baseUrl` collection variable:
+   - **Local**: `http://localhost:5000`
+   - **Live Production**: `https://fundsroom-erp-crm-portal-p9ja.onrender.com`
+3. Send the **Login** request. The test script will automatically store the `{{token}}` variable for all subsequent requests!
+
+---
+
+## 🚀 Live Deployment Instructions
+
+Full step-by-step deployment instructions for free-tier hosting on **Supabase / Neon + Render + Vercel** are available in [**`DEPLOYMENT.md`**](./DEPLOYMENT.md).
+
+### Live Production Endpoints:
+- **Live Frontend (Vercel)**: `https://fundsroom-erp.vercel.app` *(or your Vercel deployment link)*
+- **Live Backend API (Render)**: `https://fundsroom-erp-crm-portal-p9ja.onrender.com`
+- **Health Check Endpoint**: `https://fundsroom-erp-crm-portal-p9ja.onrender.com/health`
+
+---
+
+## 📝 Known Limitations & Incomplete Optional Features
+
+To maintain complete transparency:
+1. **AWS S3 Image Upload (Optional Bonus)**: Product images are currently represented as styled Lucide product badges and category tags. Physical S3 file uploads were skipped to avoid requiring paid AWS S3 bucket credentials.
+2. **Docker Setup (Optional Bonus)**: The project runs natively via Node.js / npm scripts. Dockerfile setup was omitted to focus on native Render & Vercel serverless deployment.
+3. **Print Engine**: Invoice PDF export is handled via pure A4 `@media print` directives (`window.print()`) which can be saved as PDF in 1 click. Server-side PDF binary streaming is not implemented.
+
+---
+
+## 📌 Assumptions Made During Development
+
+1. **GST Tax Rate**: Fixed at a standard 18% corporate GST rate (9% CGST + 9% SGST) for itemized tax invoice generation.
+2. **Challan Status Flow**: Challans start in `DRAFT` status and can be updated to `CONFIRMED` or `CANCELLED`. Once `CONFIRMED`, inventory stock is atomically decremented. If `CANCELLED`, previously deducted stock is automatically reversed back into inventory.
+3. **Price Snapshotting**: Product unit prices and names are snapshotted onto line items at the time of challan creation so historical invoices remain unaffected by future product price changes.
