@@ -46,6 +46,42 @@ The **Fundsroom Operations Portal** streamlines real-world business workflows ac
 
 ---
 
+## 🔐 API Access & Authorization Workflow
+
+```text
+[Client / Postman / Frontend]
+        │
+        │ 1. GET /health (Public - Ping Health Status)
+        ▼
+   [200 OK Response]
+
+        │
+        │ 2. POST /auth/login { email, password }
+        ▼
+[Backend Auth Controller] ──▶ Verifies Bcrypt Password Hash
+        │
+        ▼ (Returns 200 OK + JWT Bearer Token)
+   [JWT Payload: { userId, email, role: 'ADMIN' | 'SALES' | 'WAREHOUSE' | 'ACCOUNTS' }]
+
+        │
+        │ 3. Protected API Requests (Header: Authorization: Bearer <token>)
+        ▼
+[Express Auth Middleware (auth.ts)]
+        │
+        ├──▶ Verifies JWT Token Signature & Expiry
+        ├──▶ Enforces Role Permissions (authorize('ADMIN', 'SALES'))
+        └──▶ Passes Verified User to Route Controller
+```
+
+### Role Access Control Matrix:
+- **`ADMIN`**: Unrestricted full access to all endpoints (CRM, Inventory, Stock Adjustments, Challans, Reports).
+- **`SALES`**: Access to Customer CRM (`GET/POST /customers`), Inventory view (`GET /products`), and Challans (`POST /challans`).
+- **`WAREHOUSE`**: Access to Inventory Catalog (`GET/POST/PUT /products`), Stock Movements (`POST /products/:id/stock`), and Challans.
+- **`ACCOUNTS`**: Access to Customer CRM, Tax Invoices, and Read-only Challans.
+
+
+---
+
 ## 🛠️ Tech Stack List
 
 ### Backend
