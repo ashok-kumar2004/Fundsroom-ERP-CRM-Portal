@@ -10,6 +10,30 @@ A full-stack enterprise Operations Portal built for wholesale/distribution compa
 
 ---
 
+## 🔗 Live Production URLs & GitHub Links
+
+- 🌐 **Live Frontend Application (Vercel)**: [https://fundsroom-erp-crm-portal-delta.vercel.app](https://fundsroom-erp-crm-portal-delta.vercel.app)
+- ⚡ **Live Backend REST API (Render)**: [https://fundsroom-erp-crm-portal-p9ja.onrender.com](https://fundsroom-erp-crm-portal-p9ja.onrender.com)
+- 🟢 **Backend Health Check Endpoint**: [https://fundsroom-erp-crm-portal-p9ja.onrender.com/health](https://fundsroom-erp-crm-portal-p9ja.onrender.com/health)
+- 📂 **GitHub Repository**: [https://github.com/ashok-kumar2004/Fundsroom-ERP-CRM-Portal](https://github.com/ashok-kumar2004/Fundsroom-ERP-CRM-Portal)
+
+---
+
+## 🔑 Test Login Credentials (All 4 Roles)
+
+Password for all test accounts is: **`Test@123`**
+
+| Role | Email Address | Password | Access Level & Permissions |
+| :--- | :--- | :--- | :--- |
+| 👑 **Admin** | `admin@test.com` | `Test@123` | Full system access across CRM, Inventory, Challans, and Dashboard. |
+| 💼 **Sales** | `sales@test.com` | `Test@123` | Can manage Customers, view Inventory, create & manage Sales Challans. |
+| 📦 **Warehouse** | `warehouse@test.com` | `Test@123` | Can manage Product Inventory, execute Stock IN/OUT movements, and view Challans. |
+| 🧾 **Accounts** | `accounts@test.com` | `Test@123` | Can view Customers, inspect Invoices, and access read-only Sales Challans. |
+
+*(Note: The login screen includes one-click preset buttons to instantly log in as any role.)*
+
+---
+
 ## 📌 Project Overview & Architecture Summary
 
 The **Fundsroom Operations Portal** streamlines real-world business workflows across internal departments (Sales, Warehouse, Accounts, Admin):
@@ -17,7 +41,7 @@ The **Fundsroom Operations Portal** streamlines real-world business workflows ac
 ### Architectural Decisions
 - **Backend Architecture (Node.js + Express + TypeScript)**: Built using a modular controller-route-middleware layer. TypeScript ensures end-to-end type safety, while Zod handles request payload validation to guarantee valid data at the API boundary.
 - **Database & ORM Layer (Prisma ORM + PostgreSQL / SQLite)**: Uses Prisma ORM with dynamic provider resolution. Works seamlessly with SQLite (`dev.db`) for offline local development and PostgreSQL (Supabase / Neon) for cloud production.
-- **Frontend Architecture (React + Vite + TailwindCSS)**: Formed as a Single Page Application (SPA) with Executive Light aesthetic design tokens, Lucide SVG icon system, client-side routing, and real-time inline input validation.
+- **Frontend Architecture (React + Vite + TailwindCSS)**: Formed as a Single Page Application (SPA) with Executive Light aesthetic design tokens, custom Lucide SVG icon system, client-side routing, and real-time inline input validation.
 - **Print Engine (CSS @media print)**: 1-Click A4 PDF Corporate Tax Invoice & Delivery Note document generator built using pure CSS `@media print` directives without bloated heavy PDF dependencies.
 
 ---
@@ -42,9 +66,9 @@ The **Fundsroom Operations Portal** streamlines real-world business workflows ac
 - **Routing**: React Router DOM (v6)
 
 ### DevOps & Hosting
-- **Frontend Hosting**: Vercel
-- **Backend Web Service**: Render
-- **Database Hosting**: Supabase / Neon PostgreSQL
+- **Frontend Hosting**: Vercel (`https://fundsroom-erp-crm-portal-delta.vercel.app`)
+- **Backend Web Service**: Render (`https://fundsroom-erp-crm-portal-p9ja.onrender.com`)
+- **Database Hosting**: Supabase PostgreSQL
 
 ---
 
@@ -52,6 +76,7 @@ The **Fundsroom Operations Portal** streamlines real-world business workflows ac
 
 ```text
 fundsoom/
+├── SUBMISSION.md                  <- Final case study submission summary package
 ├── DEPLOYMENT.md                  <- Free-tier hosting deployment manual
 ├── CHECKLIST.md                   <- PDF Case Study compliance matrix
 ├── postman_collection.json        <- Exported Postman API test collection
@@ -86,21 +111,6 @@ fundsoom/
         ├── index.css              <- Executive Light Design Tokens
         └── main.tsx               <- React Entry Point
 ```
-
----
-
-## 🔑 Test Login Credentials (All 4 Roles)
-
-Password for all test accounts is: **`Test@123`**
-
-| Role | Email Address | Password | Workspace Access |
-| :--- | :--- | :--- | :--- |
-| 👑 **Admin** | `admin@test.com` | `Test@123` | Full System Access (All Modules) |
-| 💼 **Sales** | `sales@test.com` | `Test@123` | Customers CRM, Inventory, Create Challans |
-| 📦 **Warehouse** | `warehouse@test.com` | `Test@123` | Inventory Catalog, Stock IN/OUT Adjustments, Challans |
-| 🧾 **Accounts** | `accounts@test.com` | `Test@123` | Customer CRM, Invoices, Read-only Challans |
-
-*(Note: The login page includes 1-click preset buttons to instantly log in as any role.)*
 
 ---
 
@@ -155,13 +165,13 @@ Password for all test accounts is: **`Test@123`**
 | `DATABASE_URL` | PostgreSQL or SQLite database connection string | `postgresql://user:pass@host:5432/db` or `file:./dev.db` |
 | `JWT_SECRET` | Secret key used for signing JWT tokens | `supersecretjwtkey` |
 | `PORT` | Port number for Express server | `5000` |
-| `FRONTEND_URL` | Allowed frontend origin for CORS policy | `https://fundsroom-erp.vercel.app` |
+| `FRONTEND_URL` | Allowed frontend origin for CORS policy | `https://fundsroom-erp-crm-portal-delta.vercel.app` |
 
 ### Frontend Environment Variables (`frontend/.env.production`)
 
 | Variable | Description | Example / Value |
 | :--- | :--- | :--- |
-| `VITE_API_URL` | Base REST API URL of backend server | `https://fundsroom-backend.onrender.com` |
+| `VITE_API_URL` | Base REST API URL of backend server | `https://fundsroom-erp-crm-portal-p9ja.onrender.com` |
 
 ---
 
@@ -169,19 +179,16 @@ Password for all test accounts is: **`Test@123`**
 
 Full step-by-step deployment instructions for free-tier hosting on **Supabase / Neon + Render + Vercel** are available in [**`DEPLOYMENT.md`**](./DEPLOYMENT.md).
 
-### Live Production Endpoints:
-- **Live Frontend (Vercel)**: `https://fundsroom-erp.vercel.app` *(or your Vercel deployment link)*
-- **Live Backend API (Render)**: `https://fundsroom-erp-crm-portal-p9ja.onrender.com`
-- **Health Check Endpoint**: `https://fundsroom-erp-crm-portal-p9ja.onrender.com/health`
-
 ---
 
 ## 📝 Known Limitations & Incomplete Optional Features
 
-To maintain complete transparency:
-1. **AWS S3 Image Upload (Optional Bonus)**: Product images are currently represented as styled Lucide product badges and category tags. Physical S3 file uploads were skipped to avoid requiring paid AWS S3 bucket credentials.
-2. **Docker Setup (Optional Bonus)**: The project runs natively via Node.js / npm scripts. Dockerfile setup was omitted to focus on native Render & Vercel serverless deployment.
-3. **Print Engine**: Invoice PDF export is handled via pure A4 `@media print` directives (`window.print()`) which can be saved as PDF in 1 click. Server-side PDF binary streaming is not implemented.
+To maintain complete transparency against the case study's optional bonus feature list:
+
+1. 📄 **Export Invoice as PDF (Bonus Feature)**: **IMPLEMENTED**. 1-Click A4 Tax Invoice & Delivery Note document generator formatted with pure CSS `@media print` styling (`window.print()`).
+2. 🖼️ **Upload Product Image to AWS S3 (Bonus Feature)**: **SKIPPED**. Omitted to avoid requiring paid AWS S3 credentials. Products utilize styled Lucide category badges and SKU tags.
+3. 🐳 **Docker Setup (Bonus Feature)**: **SKIPPED**. The project relies on native Node.js runtime scripts and automatic Git-integrated platform builds on Vercel and Render.
+4. ⚙️ **GitHub Actions CI/CD (Bonus Feature)**: **SKIPPED**. Direct GitHub repository integrations on Render and Vercel automatically trigger build pipelines on every git push, rendering extra CI/CD pipelines redundant.
 
 ---
 

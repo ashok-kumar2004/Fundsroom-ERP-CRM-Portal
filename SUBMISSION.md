@@ -11,7 +11,7 @@
 ---
 
 ## 2. Live Frontend URL
-- **Production Web Application**: [https://fundsroom-erp.vercel.app](https://fundsroom-erp.vercel.app)
+- **Production Web Application**: [https://fundsroom-erp-crm-portal-delta.vercel.app](https://fundsroom-erp-crm-portal-delta.vercel.app)
 - **Status**: Live, accessible, and fully connected to the production backend REST API.
 
 ---

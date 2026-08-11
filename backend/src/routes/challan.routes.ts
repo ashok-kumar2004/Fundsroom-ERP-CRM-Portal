@@ -22,12 +22,10 @@ router.post('/', authorize('ADMIN', 'SALES'), createChallan);
 // 3. Get Single Challan Detail (All roles)
 router.get('/:id', authorize('ADMIN', 'SALES', 'WAREHOUSE', 'ACCOUNTS'), getChallanById);
 
-// 4. Confirm a DRAFT Challan (ADMIN, SALES, WAREHOUSE) - Support both POST and PUT
-router.post('/:id/confirm', authorize('ADMIN', 'SALES', 'WAREHOUSE'), confirmChallan);
+// 4. Confirm a DRAFT Challan (ADMIN, SALES, WAREHOUSE)
 router.put('/:id/confirm', authorize('ADMIN', 'SALES', 'WAREHOUSE'), confirmChallan);
 
-// 5. Cancel a Challan (ADMIN & SALES only) - Support both POST and PUT
-router.post('/:id/cancel', authorize('ADMIN', 'SALES'), cancelChallan);
+// 5. Cancel a Challan (ADMIN & SALES only)
 router.put('/:id/cancel', authorize('ADMIN', 'SALES'), cancelChallan);
 
 export default router;

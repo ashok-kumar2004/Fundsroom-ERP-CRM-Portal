@@ -26,12 +26,10 @@ router.get('/:id', authorize('ADMIN', 'WAREHOUSE', 'SALES', 'ACCOUNTS'), getProd
 // 4. Update Product Details (ADMIN & WAREHOUSE only)
 router.put('/:id', authorize('ADMIN', 'WAREHOUSE'), updateProduct);
 
-// 5. Record Stock Movement (ADMIN & WAREHOUSE only) - Supports /stock and /stock-movement
-router.post('/:id/stock', authorize('ADMIN', 'WAREHOUSE'), addStockMovement);
+// 5. Record Stock Movement (ADMIN & WAREHOUSE only)
 router.post('/:id/stock-movement', authorize('ADMIN', 'WAREHOUSE'), addStockMovement);
 
-// 6. Get Paginated Stock History (All roles) - Supports /history and /stock-history
-router.get('/:id/history', authorize('ADMIN', 'WAREHOUSE', 'SALES', 'ACCOUNTS'), getStockHistory);
+// 6. Get Paginated Stock History (All roles)
 router.get('/:id/stock-history', authorize('ADMIN', 'WAREHOUSE', 'SALES', 'ACCOUNTS'), getStockHistory);
 
 export default router;
