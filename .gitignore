@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Production Builds
+dist/
+build/
+
+# Environment Variables & Secrets (Root, Frontend, Backend)
+.env
+.env.local
+.env.*.local
+*.env
+backend/.env
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# Databases
+*.db
+*.db-journal
+*.sqlite
+dev.db
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
