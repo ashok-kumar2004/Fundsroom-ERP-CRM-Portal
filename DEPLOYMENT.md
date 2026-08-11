@@ -48,7 +48,7 @@ VITE_API_URL="https://fundsroom-erp-crm-portal-p9ja.onrender.com"
    - **Start Command**: `npx prisma db push && npm start`
    - **Health Check Path**: `/health`
 4. Add Environment Variables:
-   - `DATABASE_URL` = `postgresql://postgres.lvklxdfzjtxihecrkogs:y2HfGYbRZieJIvLn@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres`
+   - `DATABASE_URL` = `postgresql://postgres.[YOUR-PROJECT-REF]:[YOUR-PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres`
    - `JWT_SECRET` = `supersecretjwtkey`
    - `FRONTEND_URL` = `https://fundsroom-erp-crm-portal-delta.vercel.app`
    - `PORT` = `5000`
